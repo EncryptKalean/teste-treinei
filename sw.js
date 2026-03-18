@@ -1,4 +1,4 @@
-const CACHE_NAME = "treinei-v3";
+const CACHE_NAME = "treinei-v4";
 
 const urlsToCache = [
   "./",
@@ -10,6 +10,7 @@ const urlsToCache = [
   "./src/imagens/APP-512.png"
 ];
 
+// INSTALL
 self.addEventListener("install", (event) => {
   self.skipWaiting();
   event.waitUntil(
@@ -17,23 +18,38 @@ self.addEventListener("install", (event) => {
   );
 });
 
+// ACTIVATE
 self.addEventListener("activate", (event) => {
   self.clients.claim();
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(key => key !== CACHE_NAME && caches.delete(key)))
+      Promise.all(keys.map(key => {
+        if (key !== CACHE_NAME) {
+          return caches.delete(key);
+        }
+      }))
     )
   );
 });
 
+// FETCH (network first com fallback seguro)
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
-      .then(res => {
-        const clone = res.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-        return res;
+      .then(response => {
+        if (!response || response.status !== 200) {
+          return response;
+        }
+
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, clone);
+        });
+
+        return response;
       })
-      .catch(() => caches.match(event.request))
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });
