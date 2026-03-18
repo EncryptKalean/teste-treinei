@@ -520,7 +520,22 @@ function carregandoBiblioteca(txt) {
 fetch('biblioteca.txt').then(res => res.json()).then(data => { carregandoBiblioteca(data) })
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js")
-        .then(() => console.log("SW registrado"))
-        .catch(err => console.log("Erro SW:", err));
+  navigator.serviceWorker.register("sw.js")
+    .then((reg) => {
+      console.log("SW registrado");
+
+      reg.addEventListener("updatefound", () => {
+        const newWorker = reg.installing;
+
+        newWorker.addEventListener("statechange", () => {
+          if (newWorker.state === "installed") {
+            if (navigator.serviceWorker.controller) {
+              console.log("Nova versão disponível!");
+              window.location.reload(); // força atualização
+            }
+          }
+        });
+      });
+    })
+    .catch(err => console.log("Erro SW:", err));
 }
