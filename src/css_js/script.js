@@ -716,7 +716,7 @@ carregandoBiblioteca();
 // console.log(JSON.stringify(bib))
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/sw.js")
+  navigator.serviceWorker.register("/teste-treinei/sw.js")
     .then(() => console.log("SW registrado"))
     .catch(err => console.log("Erro SW:", err));
 }
