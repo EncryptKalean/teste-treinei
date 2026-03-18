@@ -233,14 +233,17 @@ function adicionarItem(imgSRC, contagem) {
 ======================= */
 
 function renderizar(itens) {
+    if (itens.length === 0) return
+
     const fragment = document.createDocumentFragment();
     let save;
     let save_img;
 
     if (itens.length > 1) itens.forEach((el) => { ren(el) });
-    else ren(itens);
+    else ren(itens[0] ?? itens);
 
     function ren(el) {
+
         const li = document.createElement('li');
         li.classList.add('exercicio');
 
@@ -248,8 +251,6 @@ function renderizar(itens) {
         apagar_btn.innerHTML = `<svg><use href="#icon_lixo" /></svg>`
         apagar_btn.classList.add('apagar_btn');
         apagar_btn.setAttribute('data-index', exercicios.indexOf(el));
-
-        // Tem que fazer um filtro para separar os exercicios
 
         const img = document.createElement('img');
         img.loading = 'lazy';
@@ -355,22 +356,6 @@ function renderizar(itens) {
     atualizandoDataShow(dia_numero, dia_nome);
 
     document.getElementById('trilho').append(fragment);
-
-    // Quando todos os itens forem renderizados, e for a primeira vez no dia, a tela de avaliação é iniciada
-    // if (login != `${hoje_dia}/${hoje_mes}` &&
-    //     ultima_diaria.length >= 1) {
-
-    //     const classes = ultima_diaria[ultima_diaria.length - 1].classList;
-
-    //     // Inicia a criação do formulario
-    //     avaliandoMusculos(classes);
-
-    //     // Animação
-    //     avaliacao_container.style.display = 'block';
-    //     setTimeout(() => {
-    //         avaliacao_container.style.opacity = '1';
-    //     }, 100);
-    // }
 }
 
 function atualizandoDataShow(numero, nome) {
