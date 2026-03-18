@@ -428,109 +428,6 @@ alerta_delete.addEventListener('click', (click) => {
     }
 })
 
-
-/* =======================
-   AVALIAÇÃO
-======================= */
-
-// function avaliandoMusculos(classes) {
-//     const container_avaliacao = document.getElementById('container_principal');
-//     const avaliacao_button = container_avaliacao.querySelector('button');
-//     const h2 = document.querySelector('#container_principal h2');
-
-//     let avaliacoes_quantidade = 0;
-
-//     const opcoes = [
-//         'Sem dor, totalmente recuperado',
-//         'Leve desconforto, mas nada que atrapalhe',
-//         'Dor moderada, sinto o músculo cansado',
-//         'Dor intensa, difícil movimentar normalmente'
-//     ];
-
-//     // Separa todas as tags para criar as perguntas individuais
-//     classes.forEach((el) => {
-
-//         // Ignora a tag "diaria"
-//         if (el === 'diaria') return;
-
-//         h2.textContent += ` ${el},`;
-//         avaliacoes_quantidade++;
-
-//         const label = document.createElement('label');
-//         label.textContent = `Como está o(a) ${el}?`;
-//         label.setAttribute('for', el);
-
-//         const div_musculo = document.createElement('div');
-//         div_musculo.setAttribute('name', el);
-
-//         // Cria e adiciona as opções de resposta
-//         for (let i = 0; i < opcoes.length; i++) {
-
-//             const div_op = document.createElement('div');
-
-//             const span_op = document.createElement('span');
-//             span_op.textContent = opcoes[i];
-
-//             const input_op = document.createElement('input');
-//             input_op.type = 'radio';
-//             input_op.setAttribute('name', el);
-//             input_op.value = i;
-
-//             div_op.append(span_op);
-//             div_op.appendChild(input_op);
-
-//             div_musculo.appendChild(div_op);
-//         }
-
-//         container_avaliacao.appendChild(label);
-//         container_avaliacao.appendChild(div_musculo);
-//     });
-
-//     // Inicia o eventListener das perguntas
-//     avaliacao();
-
-//     // Quando todos as perguntas forem respondidas, atualiza a data e fechar o avaliador
-//     avaliacao_button.addEventListener('click', () => {
-//         const pronto = container_avaliacao.querySelectorAll('input:checked').length === avaliacoes_quantidade;
-
-//         if (pronto) {
-//             login = `${hoje_dia}/${hoje_mes}`;
-//             localStorage.setItem('ultimoLogin', `${hoje_dia}/${hoje_mes}`);
-
-//             // Animação
-//             avaliacao_container.style.opacity = '0';
-//             setTimeout(() => {
-//                 avaliacao_container.style.display = 'none';
-//             }, 1000);
-//         }
-//         else {
-//             avaliacao_button.classList.add('erro');
-
-//             setTimeout(() => { avaliacao_button.classList.remove('erro') }, 200);
-//         };
-//     });
-// }
-
-// EventListener de todas as perguntas
-// function avaliacao() {
-//     const div_musculo = document.querySelector('#container_principal');
-
-//     div_musculo.addEventListener('click', (click) => {
-
-//         // Verificação para saber quando um input é apertado
-//         const target = click.target.closest('input');
-//         if (!target) return;
-
-//         // Desativa a resposta anterior
-//         const atual = target.parentElement.parentElement.querySelector('.avaliado');
-//         if (atual) atual.classList.toggle('avaliado');
-
-//         // Ativa a nova resposta
-//         target.parentElement.classList.toggle('avaliado');
-//     });
-// }
-
-
 /* =======================
    CARROSSEL
 ======================= */
@@ -596,35 +493,9 @@ setas_container.addEventListener('click', (click) => {
     setTimeout(() => target.classList.remove('click'), 100);
 });
 
+function carregandoBiblioteca(txt) {
 
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-const supabase = (window.supabase ??= createClient(
-    "https://ljpchdnlebmzvsjcyfei.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxqcGNoZG5sZWJtenZzamN5ZmVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQzMzAxOTYsImV4cCI6MjA2OTkwNjE5Nn0.wkcNLzuBEv1T_f2VEo8CwC04Yuta5VQli6pkZ2ZBy48",
-));
-
-async function carregandoBiblioteca() {
-    let biblioteca;
-
-    try {
-        biblioteca = JSON.parse(localStorage.getItem('galeria_acad'));
-        // console.log('procurando no local...')
-        // document.getElementById('home').style.background = 'red';
-    }
-    catch {
-        biblioteca = null;
-        console.log('Biblioteca erro');
-    }
-
-    if (!biblioteca) {
-        console.log('vamo olhar o server...')
-        const { data, error } = await supabase.from("html").select("*").eq("id", 3).single();
-        localStorage.setItem('galeria_acad', JSON.stringify(data.js_baixando));
-        biblioteca = data.js_baixando;
-        document.getElementById('home').style.background = 'green';
-    }
-
-    const biblioteca_exercs = JSON.parse(biblioteca);
+    const biblioteca_exercs = txt;
 
     const fragment = document.createDocumentFragment();
 
@@ -659,64 +530,12 @@ async function carregandoBiblioteca() {
     });
 
     ul.append(fragment);
-}
-carregandoBiblioteca();
+};
 
-
-// const bib = [
-//     { nome: 'Supino Reto', tipo: 'Peitoral', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2017/09/barbell-bench-press.gif' },
-//     { nome: 'Supino Inclinado', tipo: 'Peitoral', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/supino-inclinado-com-barra.gif' },
-//     { nome: 'Crucifixo Máquina', tipo: 'Peitoral', img: 'https://bsaapdx.com/wp-content/uploads/2023/03/Pec-Deck-Fly-BSAA.gif' },
-//     { nome: 'Supino Reto Máquina', tipo: 'Peitoral', img: 'https://static.wixstatic.com/media/2edbed_80220eb2779c4804a8a9cb9a9053077a~mv2.gif' },
-//     { nome: 'Supino Inclinado Máquina', tipo: 'Peitoral', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2025/11/supino-declinado-maquina.gif' },
-//     { nome: 'Pull-Over', tipo: 'Peitoral', img: 'https://boxlifemagazine.com/wp-content/uploads/2023/09/pull-over-barre-1-min.gif' },
-//     { nome: 'Francês', tipo: 'Triceps', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2023/10/dumbbell-seated-triceps-extension.gif' },
-//     { nome: 'Pulley Corda', tipo: 'Triceps', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2021/07/triceps-puxada-no-pulley-com-corda.gif' },
-//     { nome: 'Pulley Barra', tipo: 'Triceps', img: 'https://static.wixstatic.com/media/2edbed_e0caf218d1a446368fea3ae11102b5ef~mv2.gif' },
-//     { nome: 'Mergulho no Banco', tipo: 'triceps', img: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgSKC0cSW_KHIxz4O7vl-5xiUZraa_RO5xRZomr8EIz7F6vgRidtuT3JaUzP5oBf1dpRohmgiAex5Chp0z_sYr3aDhVtNZJ69IRqjSPyGwMHZjfRZS9qEcNIF1_3d3oAuAziBQuQscMg3Vf2nw17zMyDarsJ0UB35HHdLD5W5DXhnO-oLhfQZyLH_DX7g/s16000/mergulho.gif',  contagem: 'repeticoes'  },
-//     { nome: 'Triceps Testa', tipo: 'triceps', img: 'https://image.tuasaude.com/media/article/hd/sc/exercicios-para-biceps-e-triceps_75262.gif?width=686&height=487' },
-//     { nome: 'Elevação de Ombros', tipo: 'Ombro', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/desenvolvimento-para-ombros-com-halteres.gif' },
-//     { nome: 'Elevação Lateral', tipo: 'Ombro', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/ombros-elevacao-lateral-de-ombros-com-halteres.gif' },
-//     { nome: 'Elevação Lateral Maquina', tipo: 'Ombro', img: 'https://i.pinimg.com/originals/5c/26/01/5c260113a602e20af15a2adccbeca928.gif' },
-//     { nome: 'Elevação Frontal', tipo: 'Ombro', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2018/09/elevacao-frontal-com-anilha-v2.gif' },
-//     { nome: 'Remada Alta', tipo: 'Ombro', img: 'https://static.wixstatic.com/media/2edbed_4d703635f5b84daf95d094ba48521489~mv2.gif' },
-//     { nome: 'Remada Alta Pulley', tipo: 'Ombro', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/ombros-remada-alta-no-cabo.gif' },
-//     { nome: 'Pulley Frente', tipo: 'Costas', img: 'https://static.wixstatic.com/media/2edbed_31120f3c7f2e4c37b202581c77509e6d~mv2.gif' },
-//     { nome: 'Pulley Frente Triângulo', tipo: 'Costas', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/costas-puxada-para-frente-no-pulley-com-triangulo.gif' },
-//     { nome: 'Remada Baixa', tipo: 'Costas', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/costas-remada-sentado-com-cabos-e-triangulo.gif' },
-//     { nome: 'Remada Sentado Maquina', tipo: 'Costas', img: 'https://fitcron.com/wp-content/uploads/2021/04/26641301-Lever-Seated-Row-plate-loaded_Back_720.gif' },
-//     { nome: 'Remada no Banco', tipo: 'Costas', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/costas-remada-martelo-no-banco-inclinado-com-halteres.gif' },
-//     { nome: 'Remada Serrote', tipo: 'Costas', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/remada-serrote-2.gif' },
-//     { nome: 'Puxada Convergente', tipo: 'Costas', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2025/05/puxada-maquina-articulada.gif' },
-//     { nome: 'Rosca Simultânea', tipo: 'Biceps', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2019/04/rosca-simultanea.gif' },
-//     { nome: 'Rosca Direta com Barra', tipo: 'Biceps', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/rosca-biceps-direta-na-barra-ez.gif' },
-//     { nome: 'Rosca Scott', tipo: 'Biceps', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2019/04/rosca-scott.gif' },
-//     { nome: 'Rosca Concentrada', tipo: 'Biceps', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2019/04/rosca-concentrada.gif' },
-//     { nome: 'Rosca Concentrada no Pulley', tipo: 'Biceps', img: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/11/overhead-cable-curl.gif' },
-//     { nome: 'Rosca Alternada', tipo: 'Biceps', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2019/04/rosca-alternada.gif' },
-//     { nome: 'Rosca Martelo', tipo: 'Biceps', img: 'https://image.tuasaude.com/media/article/kr/cn/rosca-martelo_75628.gif?width=686&height=487' },
-//     { nome: 'Elevação de Pernas', tipo: 'Abdômen', img: 'https://fitcron.com/wp-content/uploads/2021/04/08261301-Vertical-Leg-Raise-on-parallel-bars_Hips_720.gif', contagem: 'repeticoes' },
-//     { nome: 'Elevação de Pernas Deitado', tipo: 'Abdômen', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2018/12/elevacao-de-pernas-no-chao.gif', contagem: 'repeticoes' },
-//     { nome: 'Abdominal', tipo: 'Abdômen', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2017/09/abdominal-reto.gif', contagem: 'repeticoes' },
-//     { nome: 'Abdominal Alternado', tipo: 'Abdômen', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2021/04/abdominal-bicicleta-no-ar.gif', contagem: 'repeticoes' },
-//     { nome: 'Abdominal Canivete', tipo: 'Abdômen', img: 'https://newlife.com.cy/wp-content/uploads/2019/11/05071301-Jackknife-Sit-Up_waist_360.gif', contagem: 'repeticoes' },
-//     { nome: 'Abdominal Remador', tipo: 'Abdômen', img: 'https://treinomestre.com.br/wp-content/uploads/2024/11/abdominal-remador-1.gif', contagem: 'repeticoes' },
-//     { nome: 'Prancha', tipo: 'Abdômen', img: 'https://workoutguru.fit/wp-content/uploads/2023/10/front-plank-butt-wrong-right-female-video-exercise-guide-tips-2-768x432.jpg', contagem: 'segundos' },
-//     { nome: 'Leg Press', tipo: 'Quadriceps', img: 'https://www.inspireusafoundation.org/wp-content/uploads/2022/03/single-leg-leg-press.gif' },
-//     { nome: 'Hack Machine', tipo: 'Quadriceps', img: 'https://www.infofitness.nl/wp-content/uploads/2023/10/hack-squat.gif' },
-//     { nome: 'Agachamento Livre com Barra', tipo: 'Quadriceps', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2020/11/agachamento-com-barra.gif' },
-//     { nome: 'Agachamento Smith', tipo: 'Quadriceps', img: 'https://static.wixstatic.com/media/2edbed_687d6aac9dcd4a78b3de2247d5dad059~mv2.gif' },
-//     { nome: 'Cadeira Extensora', tipo: 'Quadriceps', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2021/04/pernas-extensao-de-pernas-na-maquina.gif' },
-//     { nome: 'Cadeira Adutora', tipo: 'Quadriceps', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2021/04/pernas-aducao-de-pernas-na-maquina.gif' },
-//     { nome: 'Panturrilha Máquina', tipo: 'Panturrilha', img: 'https://www.mundoboaforma.com.br/wp-content/uploads/2021/03/Panturrilha-em-pe-no-aparelho.gif' },
-//     { nome: 'Panturrilha Sentado', tipo: 'Panturrilha', img: 'https://www.hipertrofia.org/blog/wp-content/uploads/2018/10/lever-seated-calf-raise-.gif' },
-//     // {nome: '', tipo: '', img: ''},
-// ]
-
-// console.log(JSON.stringify(bib))
+fetch('../biblioteca.txt').then(res => res.json()).then(data => { carregandoBiblioteca(data) })
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("SW registrado"))
-    .catch(err => console.log("Erro SW:", err));
+    navigator.serviceWorker.register("sw.js")
+        .then(() => console.log("SW registrado"))
+        .catch(err => console.log("Erro SW:", err));
 }
