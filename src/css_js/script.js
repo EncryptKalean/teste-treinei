@@ -532,7 +532,7 @@ function carregandoBiblioteca(txt) {
     ul.append(fragment);
 };
 
-fetch('../biblioteca.txt').then(res => res.json()).then(data => { carregandoBiblioteca(data) })
+fetch('biblioteca.txt').then(res => res.json()).then(data => { carregandoBiblioteca(data) })
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js")
