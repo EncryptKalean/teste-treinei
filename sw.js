@@ -1,16 +1,18 @@
-const CACHE_NAME = "treinei-v1";
+const CACHE_NAME = "treinei-v2";
 
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/style.css",
-  "/script.js",
-  "/manifest.json",
-  "/src/imagens/APP-200.png"
+  "./",
+  "./index.html",
+  "./css_js/css.css",
+  "./css_js/script.js",
+  "./manifest.json",
+  "./imagens/APP-192.png",
+  "./imagens/APP-512.png"
 ];
 
 // Instalação
 self.addEventListener("install", (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(urlsToCache);
@@ -18,7 +20,7 @@ self.addEventListener("install", (event) => {
   );
 });
 
-// Ativação (limpa cache antigo)
+// Ativação
 self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) => {
@@ -31,17 +33,19 @@ self.addEventListener("activate", (event) => {
       );
     })
   );
+  self.clients.claim();
 });
 
-// Intercepta requisições (offline)
+// Fetch (network first)
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        return caches.open("treinei-v1").then((cache) => {
-          cache.put(event.request, response.clone());
-          return response;
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(event.request, responseClone);
         });
+        return response;
       })
       .catch(() => caches.match(event.request))
   );
