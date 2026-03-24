@@ -56,6 +56,11 @@
     "img": "https://image.tuasaude.com/media/article/hd/sc/exercicios-para-biceps-e-triceps_75262.gif?width=686&height=487"
   },
   {
+    "nome": "Triceps Testa no Pulley",
+    "tipo": "triceps",
+    "img": "https://static.wixstatic.com/media/2edbed_f88d1308532b4db99422f47c40190e3e~mv2.gif"
+  },
+  {
     "nome": "Elevação de Ombros",
     "tipo": "Ombro",
     "img": "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/desenvolvimento-para-ombros-com-halteres.gif"
