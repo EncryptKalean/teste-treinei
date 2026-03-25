@@ -1,21 +1,19 @@
-const CACHE_NAME = "treinei-v4.1.L.1";
+const CACHE_NAME = "treinei-v4.2.L.2";
 
-const urlsToCache = [
+const STATIC_ASSETS = [
   "./",
   "./index.html",
   "./src/css_js/css.css",
   "./src/css_js/script.js",
   "./manifest.json",
   "./biblioteca.txt",
-  "./src/imagens/APP-192.png",
-  "./src/imagens/APP-512.png"
 ];
 
-// INSTALL
+// INSTALL → garante offline base
 self.addEventListener("install", (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
   );
 });
 
@@ -24,33 +22,28 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
   event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.map(key => {
-        if (key !== CACHE_NAME) {
-          return caches.delete(key);
-        }
-      }))
+      Promise.all(keys.map(key => key !== CACHE_NAME && caches.delete(key)))
     )
   );
 });
 
-// FETCH (network first com fallback seguro)
+// FETCH (inteligente)
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        if (!response || response.status !== 200) {
-          return response;
-        }
-
         const clone = response.clone();
+
         caches.open(CACHE_NAME).then(cache => {
           cache.put(event.request, clone);
         });
 
         return response;
       })
-      .catch(() => {
-        return caches.match(event.request);
-      })
+      .catch(() => caches.match(event.request))
   );
 });
+
+/*
+  OBS: Eu não configurei essa parte do SW.js sozinho, usei bastante IA e pesquisas na internet
+*/

@@ -233,6 +233,11 @@
     "img": "https://www.mundoboaforma.com.br/wp-content/uploads/2021/04/pernas-aducao-de-pernas-na-maquina.gif"
   },
   {
+    "nome": "Flexora",
+    "tipo": "Quadriceps",
+    "img": "https://image.tuasaude.com/media/article/pz/cr/67dd5b45b8f49/original.gif?width=686&height=487"
+  },
+  {
     "nome": "Panturrilha Máquina",
     "tipo": "Panturrilha",
     "img": "https://www.mundoboaforma.com.br/wp-content/uploads/2021/03/Panturrilha-em-pe-no-aparelho.gif"
