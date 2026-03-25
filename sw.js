@@ -1,4 +1,4 @@
-const CACHE_NAME = "treinei-v4.L.1";
+const CACHE_NAME = "treinei-v4.1.L.1";
 
 const urlsToCache = [
   "./",
@@ -6,6 +6,7 @@ const urlsToCache = [
   "./src/css_js/css.css",
   "./src/css_js/script.js",
   "./manifest.json",
+  "./biblioteca.txt",
   "./src/imagens/APP-192.png",
   "./src/imagens/APP-512.png"
 ];
