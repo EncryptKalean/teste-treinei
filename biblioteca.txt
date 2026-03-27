@@ -116,6 +116,11 @@
     "img": "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/costas-remada-martelo-no-banco-inclinado-com-halteres.gif"
   },
   {
+    "nome": "Remada no pullry",
+    "tipo": "Costas",
+    "img": "https://pelank.com/wp-content/uploads/2025/01/Kneeling-High-Pulley-Row.gif"
+  },
+  {
     "nome": "Remada Serrote",
     "tipo": "Costas",
     "img": "https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/remada-serrote-2.gif"
