@@ -45,6 +45,8 @@ const observer = new IntersectionObserver(
 
                 observer.unobserve(item);
 
+                console.log('renderizou');
+
             }
             else item.classList.toggle('show', entry.isIntersecting);
         });
@@ -227,7 +229,6 @@ function adicionarItem(imgSRC, contagem) {
     };
 }
 
-
 /* =======================
    RENDERIZAR CARD
 ======================= */
@@ -248,7 +249,7 @@ function renderizar(itens) {
         li.classList.add('exercicio');
 
         const apagar_btn = document.createElement('button');
-        apagar_btn.innerHTML = `<svg><use href="#icon_lixo" /></svg>`
+        apagar_btn.innerHTML = `<svg><use href="#icon_lixo" /></svg>`;
         apagar_btn.classList.add('apagar_btn');
         apagar_btn.setAttribute('data-index', exercicios.indexOf(el));
 
@@ -329,24 +330,26 @@ function renderizar(itens) {
     // Atualiza o carrossel
     setTimeout(() => {
         diarias = document.querySelectorAll('.diaria');
+        const miniFragment = [];
 
-        if (itens.length > 1) ultima_diaria.forEach((el) => {
-            el.querySelectorAll('img').forEach((img) => {
-                observer.observe(img);
-            });
-        })
+        if (itens.length > 1)
+            miniFragment.push(
+                ...[...ultima_diaria].flatMap(el => [...el.querySelectorAll('img')])
+            );
         else {
+            miniFragment.push(save_img);
+
             if (save) {
                 const div = document.querySelector(`#${save}`);
-
-                observer.observe(div);
-            }
-            const img = save_img;
-
-            observer.observe(img);
+                miniFragment.push(div);
+            };
         };
 
-        setTimeout(() => { trilho.parentElement.scrollLeft = trilho.clientWidth; }, 500)
+        setTimeout(() => {
+            trilho.parentElement.scrollLeft = 0;
+            miniFragment.forEach(img => observer.observe(img));
+        }, 500);
+
     }, 500);
 
     // Atualiza a data da diaria, caso ela exista
@@ -418,7 +421,8 @@ alerta_delete.addEventListener('click', (click) => {
 ======================= */
 
 let diarias = document.querySelectorAll('.diaria');
-let casa_carrossel = { valor: diarias.length };
+let casa_carrossel = { valor: 0 };
+const divPai = document.getElementById('vitrine');
 
 diarias.forEach((el) => { observer.observe(el); });
 
@@ -426,37 +430,44 @@ function carrossel(
     quantidade_de_itens,
     progresso_carrossel,
     trilho,
-    direcao
+    seta
 ) {
-    const tamanho_do_trilho = +window.getComputedStyle(trilho).getPropertyValue('width').split('px')[0];
+    const tamanho_do_trilho = trilho.clientWidth;
 
-    const divPai = trilho.parentElement;
+    // Define para qual lado fica as "costas" do carrossel
+    const indoParaEsquerda = (seta === 'setaEsquerda');
+
     let posicao_Scroll = divPai.scrollLeft;
 
     const tamanho_item = tamanho_do_trilho / quantidade_de_itens;
 
-    if (progresso_carrossel.valor >= quantidade_de_itens && direcao != 'setaEsquerda') {
+    let novaPosicao = progresso_carrossel.valor + (indoParaEsquerda ? -1 : 1);
+
+    // Volta pro ponto inicial ao chegar no fim do trilho
+    if (novaPosicao > quantidade_de_itens) {
+        novaPosicao = 1;
         posicao_Scroll = 0;
-        progresso_carrossel.valor = 1;
     }
-
-    else if (progresso_carrossel.valor <= 1 && direcao === 'setaEsquerda') {
-        posicao_Scroll = trilho.clientWidth;
-        progresso_carrossel.valor = quantidade_de_itens;
+    // Vai pro fim do trilho ao tentar ir alem do ponto 0
+    else if (novaPosicao < 1) {
+        novaPosicao = quantidade_de_itens;
+        posicao_Scroll = tamanho_do_trilho;
     }
-
+    // Faz o carrossel percorrer normalmente
     else {
-        posicao_Scroll += (direcao === 'setaEsquerda' ? -1 : 1) * tamanho_item;
-        progresso_carrossel.valor = direcao === 'setaEsquerda' ? progresso_carrossel.valor - 1 : progresso_carrossel.valor + 1;
-    };
+        posicao_Scroll += (indoParaEsquerda ? -1 : 1) * tamanho_item;
+    }
 
     divPai.scrollTo({
         top: 0,
         left: posicao_Scroll,
     });
 
+    progresso_carrossel.valor = novaPosicao;
+
     // Atualizando data_show
-    const novoDiaria = diarias[progresso_carrossel.valor - 1];
+    const index = quantidade_de_itens - novaPosicao;
+    const novoDiaria = diarias[index];
     const dia_numero = novoDiaria.dataset.data;
     const dia_nome = transcricao[novoDiaria.dataset.dds - 1];
     atualizandoDataShow(dia_numero, dia_nome);
@@ -520,22 +531,22 @@ function carregandoBiblioteca(txt) {
 fetch('biblioteca.txt').then(res => res.json()).then(data => { carregandoBiblioteca(data) })
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then((reg) => {
-      console.log("SW registrado");
+    navigator.serviceWorker.register("sw.js")
+        .then((reg) => {
+            // console.log("SW registrado");
 
-      reg.addEventListener("updatefound", () => {
-        const newWorker = reg.installing;
+            reg.addEventListener("updatefound", () => {
+                const newWorker = reg.installing;
 
-        newWorker.addEventListener("statechange", () => {
-          if (newWorker.state === "installed") {
-            if (navigator.serviceWorker.controller) {
-              console.log("Nova versão disponível!");
-              window.location.reload(); // força atualização
-            }
-          }
-        });
-      });
-    })
-    .catch(err => console.log("Erro SW:", err));
+                newWorker.addEventListener("statechange", () => {
+                    if (newWorker.state === "installed") {
+                        if (navigator.serviceWorker.controller) {
+                            console.log("Nova versão disponível!");
+                            window.location.reload(); // força atualização
+                        }
+                    }
+                });
+            });
+        })
+        .catch(err => console.log("Erro SW:", err));
 }

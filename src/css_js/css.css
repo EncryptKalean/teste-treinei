@@ -19,6 +19,10 @@
   font-family:
     Inter, "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   letter-spacing: 1.3px;
+  user-select: none; /* Padrão */
+  -webkit-user-select: none; /* Safari e Chrome */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge antigo */
 }
 
 *:focus-visible {
@@ -45,7 +49,7 @@ html {
   font-size: 62.5%;
   letter-spacing: 1px;
   color: white;
-  height: 100%;
+  height: 100dvh;
 }
 
 h1,
@@ -59,7 +63,7 @@ h2 {
 }
 
 body {
-  height: 100%;
+  height: 100dvh;
   position: relative;
   overflow: hidden;
 }
@@ -168,6 +172,7 @@ use {
   width: max-content;
   max-height: 80dvh;
   display: flex;
+  flex-direction: row-reverse;
   gap: var(--gap);
 }
 
@@ -498,7 +503,7 @@ button.clicado {
   left: 50%;
   transform: translate(-50%, 100%);
   width: 90%;
-  height: 100vh;
+  height: 100dvh;
   border-radius: 20px;
   background: rgba(17, 21, 34, 1);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
