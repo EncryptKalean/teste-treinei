@@ -1,5 +1,9 @@
 [
   {
+    "nome": "divisao",
+    "tipo": "Peitoral"
+  },
+  {
     "nome": "Supino Reto",
     "tipo": "Peitoral",
     "img": "https://www.hipertrofia.org/blog/wp-content/uploads/2017/09/barbell-bench-press.gif"
@@ -28,6 +32,15 @@
     "nome": "Pull-Over",
     "tipo": "Peitoral",
     "img": "https://boxlifemagazine.com/wp-content/uploads/2023/09/pull-over-barre-1-min.gif"
+  },
+  {
+    "nome": "Crossover",
+    "tipo": "Peitoral",
+    "img": "https://www.hipertrofia.org/blog/wp-content/uploads/2024/08/crucifixo-crossover-alto.gif"
+  },
+  {
+    "nome": "divisao",
+    "tipo": "Triceps"
   },
   {
     "nome": "Francês",
@@ -61,6 +74,10 @@
     "img": "https://static.wixstatic.com/media/2edbed_f88d1308532b4db99422f47c40190e3e~mv2.gif"
   },
   {
+    "nome": "divisao",
+    "tipo": "Ombro"
+  },
+  {
     "nome": "Elevação de Ombros",
     "tipo": "Ombro",
     "img": "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/desenvolvimento-para-ombros-com-halteres.gif"
@@ -76,9 +93,19 @@
     "img": "https://i.pinimg.com/originals/5c/26/01/5c260113a602e20af15a2adccbeca928.gif"
   },
   {
+    "nome": "Elevação Lateral Pulley",
+    "tipo": "Ombro",
+    "img": "https://www.hipertrofia.org/blog/wp-content/uploads/2023/12/cable-one-arm-lateral-raise.gif"
+  },
+  {
     "nome": "Elevação Frontal",
     "tipo": "Ombro",
     "img": "https://www.hipertrofia.org/blog/wp-content/uploads/2018/09/elevacao-frontal-com-anilha-v2.gif"
+  },
+  {
+    "nome": "Elevação Frontal Pulley",
+    "tipo": "Ombro",
+    "img": "https://fitcron.com/wp-content/uploads/2021/04/01621301-Cable-Front-Raise_Shoulders_720.gif"
   },
   {
     "nome": "Remada Alta",
@@ -89,6 +116,10 @@
     "nome": "Remada Alta Pulley",
     "tipo": "Ombro",
     "img": "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/ombros-remada-alta-no-cabo.gif"
+  },
+  {
+    "nome": "divisao",
+    "tipo": "Costas"
   },
   {
     "nome": "Pulley Frente",
@@ -131,6 +162,10 @@
     "img": "https://www.hipertrofia.org/blog/wp-content/uploads/2025/05/puxada-maquina-articulada.gif"
   },
   {
+    "nome": "divisao",
+    "tipo": "Biceps"
+  },
+  {
     "nome": "Rosca Simultânea",
     "tipo": "Biceps",
     "img": "https://www.hipertrofia.org/blog/wp-content/uploads/2019/04/rosca-simultanea.gif"
@@ -164,6 +199,10 @@
     "nome": "Rosca Martelo",
     "tipo": "Biceps",
     "img": "https://image.tuasaude.com/media/article/kr/cn/rosca-martelo_75628.gif?width=686&height=487"
+  },
+  {
+    "nome": "divisao",
+    "tipo": "Abdômen"
   },
   {
     "nome": "Elevação de Pernas",
@@ -208,6 +247,10 @@
     "contagem": "segundos"
   },
   {
+    "nome": "divisao",
+    "tipo": "Quadriceps"
+  },
+  {
     "nome": "Leg Press",
     "tipo": "Quadriceps",
     "img": "https://www.inspireusafoundation.org/wp-content/uploads/2022/03/single-leg-leg-press.gif"
@@ -241,6 +284,10 @@
     "nome": "Flexora",
     "tipo": "Quadriceps",
     "img": "https://image.tuasaude.com/media/article/pz/cr/67dd5b45b8f49/original.gif?width=686&height=487"
+  },
+  {
+    "nome": "divisao",
+    "tipo": "Panturrilha"
   },
   {
     "nome": "Panturrilha Máquina",

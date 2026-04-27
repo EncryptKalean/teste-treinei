@@ -501,26 +501,36 @@ function carregandoBiblioteca(txt) {
         const li = document.createElement('li');
         li.setAttribute('data-contagem', el.contagem);
 
-        const img = document.createElement('img');
-        img.setAttribute('loading', 'lazy');
-        img.setAttribute('data-original', el.img);
-        img.setAttribute('data-otimizado', `https://images.weserv.nl/?url=${encodeURIComponent(el.img)}&w=120&output=webp&we`);
-        img.setAttribute('musculo', el.tipo);
-        img.setAttribute('decoding', 'async');
+        if (el.nome === 'divisao') {
+            li.classList.add('divisao');
 
-        const p = document.createElement('p');
-        p.classList.add('nome')
-        p.textContent = el.nome;
+            const h2 = document.createElement('h2');
+            h2.textContent = el.tipo;
 
-        const musculo = document.createElement('p');
-        musculo.classList.add('musculo');
-        musculo.textContent = el.tipo;
+            li.append(h2);
+        }
+        else {
+            const img = document.createElement('img');
+            img.setAttribute('loading', 'lazy');
+            img.setAttribute('data-original', el.img);
+            img.setAttribute('data-otimizado', `https://images.weserv.nl/?url=${encodeURIComponent(el.img)}&w=120&output=webp&we`);
+            img.setAttribute('musculo', el.tipo);
+            img.setAttribute('decoding', 'async');
 
-        li.append(img);
-        li.append(musculo);
-        li.append(p);
+            const p = document.createElement('p');
+            p.classList.add('nome')
+            p.textContent = el.nome;
 
-        observer.observe(img);
+            const musculo = document.createElement('p');
+            musculo.classList.add('musculo');
+            musculo.textContent = el.tipo;
+
+            li.append(img);
+            li.append(musculo);
+            li.append(p);
+
+            observer.observe(img);
+        }
 
         fragment.append(li);
     });

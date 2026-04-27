@@ -1,4 +1,4 @@
-const CACHE_NAME = "treinei-v4.3.L.2";
+const CACHE_NAME = "treinei-v4.2.L.2";
 
 const STATIC_ASSETS = [
   "./",
@@ -27,11 +27,27 @@ self.addEventListener("activate", (event) => {
   );
 });
 
+
 // FETCH (inteligente)
 self.addEventListener("fetch", (event) => {
+  const url = new URL(event.request.url);
+
+  // 🚫 ignora coisas que não são http/https
+  if (!url.protocol.startsWith("http")) return;
+
+  // 🚫 só aceita GET
+  if (event.request.method !== "GET") return;
+
+  // 🔒 só cacheia coisas do seu próprio site
+  if (url.origin !== self.location.origin) return;
+
   event.respondWith(
     fetch(event.request)
       .then(response => {
+        if (!response || response.status !== 200) {
+          return response;
+        }
+
         const clone = response.clone();
 
         caches.open(CACHE_NAME).then(cache => {

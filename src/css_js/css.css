@@ -414,6 +414,16 @@ nav::-webkit-scrollbar {
   font-size: 1.2rem !important;
 }
 
+#biblioteca_container li.divisao {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 5%;
+}
+
+#biblioteca_container li.divisao:not(.divisao:first-of-type) {
+  margin-top: 10%;
+}
+
 /* MENU --------------------------------------------------------*/
 /* MENU --------------------------------------------------------*/
 /* MENU --------------------------------------------------------*/
