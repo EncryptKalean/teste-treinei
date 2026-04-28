@@ -15,30 +15,22 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  list-style: none;
-  font-family:
-    Inter, "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  letter-spacing: 1.3px;
-  user-select: none; /* Padrão */
-  -webkit-user-select: none; /* Safari e Chrome */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge antigo */
 }
 
-*:focus-visible {
-  outline: 2px solid var(--cor_tema);
-  outline-offset: 1px;
+li,
+ul {
+  list-style: none;
 }
 
 /* --------- Escondendo scrollbar */
 
 /* Para Chrome, Safari e Opera */
-*::-webkit-scrollbar {
+div::-webkit-scrollbar {
   display: none;
 }
 
 /* Para Firefox */
-* {
+div {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE e Edge */
 }
@@ -49,7 +41,9 @@ html {
   font-size: 62.5%;
   letter-spacing: 1px;
   color: white;
-  height: 100dvh;
+  height: 100%;
+  font-family:
+    Inter, "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 h1,
@@ -62,17 +56,29 @@ h2 {
   font-weight: 700;
 }
 
+p,
+h1,
+h2,
+h3,
+h4 {
+  letter-spacing: 1.3px;
+}
+
 body {
-  height: 100dvh;
+  height: 100%;
   position: relative;
   overflow: hidden;
+  user-select: none; /* Padrão */
+  -webkit-user-select: none; /* Safari e Chrome */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge antigo */
 }
 
 img {
   border-radius: 15px;
   width: 100%;
   aspect-ratio: 1;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   object-fit: cover;
   object-position: center;
 }
@@ -103,7 +109,7 @@ use {
 }
 
 #setas_container {
-  top: 5dvh;
+  top: 5vh;
   position: absolute;
   /* border: 1px solid red; */
   width: 70%;
@@ -119,15 +125,12 @@ use {
   border: 0;
   background-color: transparent;
   color: var(--texto_2);
-  transform: translateX(0);
-  scale: 1;
+  transform: translateX(0) scale(1);
   transition: 0.1s;
 }
 
 #setas_container button.click {
-  transform: translateX(-5px);
-  filter: brightness(1.3);
-  scale: 1.3;
+  transform: translateX(-5px) scale(1.2);
 }
 
 #setaDireita {
@@ -139,7 +142,7 @@ use {
 #data_show {
   background: rgba(21, 26, 38, 1);
   color: var(--texto_1);
-  top: 3.5dvh;
+  top: 3.5vh;
   border-radius: 30px;
   position: absolute;
   width: 75%;
@@ -205,8 +208,31 @@ use {
 .exercicio img {
   width: 25%;
   border: none;
-  filter: grayscale(100%);
-  opacity: 0.9;
+  opacity: 0.7;
+}
+
+.derrotado {
+  opacity: 0.7;
+}
+
+.derrotado p::after {
+  content: " derrotado";
+  color: rgba(0, 226, 0, 0.5);
+  text-transform: uppercase;
+}
+
+.derrotado > svg {
+  position: absolute;
+  top: 20%;
+  right: 20%;
+  width: 30px;
+  aspect-ratio: 1;
+  color: #ffe600;
+  background-color: color-mix(in srgb, var(--cor_tema) 50%, transparent);
+  border-radius: 50%;
+  z-index: 1;
+  padding: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .area_textos {
@@ -245,14 +271,14 @@ use {
   aspect-ratio: 1;
   background: transparent;
   border: none;
-  box-shadow: 0 0 5px currentColor;
+  border: 1px solid currentColor;
   color: var(--cor_tema);
 }
 
 #alerta_delete {
   position: absolute;
   background: var(--card);
-  box-shadow: 0 0 15px var(--cor_tema);
+  box-shadow: 0 0 5px var(--cor_tema);
   border-radius: 20px;
   width: 100%;
   top: 50%;
@@ -295,8 +321,8 @@ use {
 /* BIBLIOTECA --------------------------------------------------------*/
 
 #biblioteca_button {
-  transition: 1s;
-  rotate: 0;
+  transition: 0.6s;
+  transform: rotate(0deg);
   z-index: 1;
   position: absolute;
   right: 5%;
@@ -304,7 +330,7 @@ use {
   color: var(--texto_1);
   border: 0;
   background: rgba(21, 26, 38, 1);
-  box-shadow: 0 0 15px rgba(128, 128, 128, 0.3);
+  box-shadow: 0 0 5px rgba(128, 128, 128, 0.4);
   color: var(--texto_1);
   width: 60px;
   aspect-ratio: 1;
@@ -312,7 +338,7 @@ use {
 }
 
 #biblioteca_button.aberto {
-  rotate: 45deg;
+  transform: rotate(45deg);
   background-color: #ff4b4b;
   opacity: 0.85;
 }
@@ -322,12 +348,11 @@ use {
   top: 5%;
   left: 50%;
   transform: translate(-50%, 100%);
-  will-change: transform;
-  transition: 1s ease-out;
+  transition: 0.6s ease-out;
   width: 90%;
   height: 100%;
   background: rgb(10, 16, 32);
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   padding: 2%;
   opacity: 0;
   border-radius: 20px;
@@ -376,7 +401,7 @@ nav::-webkit-scrollbar {
   text-align: center;
   width: calc(90% / 2);
   background: rgba(18, 30, 51, 1);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   padding: 2%;
   border: 2px solid transparent;
@@ -394,7 +419,7 @@ nav::-webkit-scrollbar {
 }
 
 #biblioteca_container img {
-  filter: brightness(0.95) contrast(0.9);
+  opacity: 0.8;
   max-width: 120px;
 }
 
@@ -438,14 +463,14 @@ nav::-webkit-scrollbar {
   border-radius: 50%;
   border: 0;
   background: rgba(21, 26, 38, 1);
-  box-shadow: 0 0 15px rgba(128, 128, 128, 0.3);
+  border: 2px solid color-mix(in srgb, currentColor, transparent 70%);
   color: var(--texto_2);
   padding: 2%;
   transition: 0.2s;
 }
 
 button.clicado {
-  scale: 1.15;
+  transform: scale(1.15);
 }
 
 #btn_menu.aberto {
@@ -462,10 +487,10 @@ button.clicado {
   transform: translateX(100%);
   background: var(--background);
   z-index: 1;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   text-align: center;
   padding: 5% 2%;
-  transition: 0.7s;
+  transition: 0.5s;
 }
 
 #menu.aberto {
@@ -513,14 +538,14 @@ button.clicado {
   left: 50%;
   transform: translate(-50%, 100%);
   width: 90%;
-  height: 100dvh;
+  min-height: 100vh;
   border-radius: 20px;
   background: rgba(17, 21, 34, 1);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
   padding: 5%;
   gap: 20px;
   font-size: 1.5rem;
-  transition: 0.9s;
+  transition: 0.7s;
   opacity: 0;
   color: var(--texto_1);
 }
@@ -559,7 +584,7 @@ button.clicado {
 }
 
 #tela_adicao button {
-  scale: 1;
+  transform: scale(1);
   transition: 0.1s;
 }
 
@@ -595,8 +620,8 @@ button.clicado {
 }
 
 #tela_adicao button.click {
-  filter: brightness(1.5);
-  scale: 1.3;
+  transform: scale(1.3);
+  background-color: color-mix(in srgb, var(--card), white 15%);
 }
 
 /* AVALIAÇÂO --------------------------------------------------------*/
@@ -613,7 +638,6 @@ button.clicado {
   align-content: center;
   z-index: 5;
   opacity: 0;
-  transition: 1s;
 }
 
 #container_principal {
@@ -691,7 +715,7 @@ button.clicado {
   width: calc(90% / 2);
   padding: 10px 5px;
   border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
   transition: 0.5s;
   font-size: 1.2rem;
   align-content: center;
@@ -699,7 +723,7 @@ button.clicado {
 
 #container_principal .avaliado {
   background: var(--cor_tema);
-  scale: 1.1;
+  transform: scale(1.1);
 }
 
 #encerrar_avaliacao {
@@ -720,4 +744,18 @@ button.clicado {
 #encerrar_avaliacao.erro {
   background: red;
   transform: translateY(10px);
+}
+
+/* RESPONSIVO */
+/* RESPONSIVO */
+/* RESPONSIVO */
+
+@media (width < 37.5rem) {
+  /* body {
+    border: 2px solid red;
+  } */
+
+  * {
+    box-shadow: none;
+  }
 }

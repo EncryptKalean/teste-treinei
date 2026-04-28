@@ -278,6 +278,15 @@ function renderizar(itens) {
         const p = document.createElement('p');
         p.textContent = el.dificuldade;
 
+        const dificuldade = +el.dificuldade.slice(-5).split('/10')[0];
+
+        if (dificuldade <= 5) {
+            li.classList.add('derrotado');
+
+            li.innerHTML += '<svg><use href="#icon_trofeu" /></svg>';
+        };
+
+
         li.append(img);
 
         area_cima.append(h3);
