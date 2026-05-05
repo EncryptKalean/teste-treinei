@@ -76,7 +76,8 @@ body {
 
 img {
   border-radius: 15px;
-  inset: 0;
+  width: 100%;
+  aspect-ratio: 1;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   object-fit: cover;
   object-position: center;
@@ -397,23 +398,22 @@ nav::-webkit-scrollbar {
 }
 
 #biblioteca_container ul {
-  --grade: 2;
-  display: grid;
-  grid-template-columns: repeat(var(--grade), 1fr);
-  place-content: center;
+  display: flex;
+  flex-wrap: wrap;
   gap: 25px;
-  padding: 0 3%;
+  justify-content: center;
 }
 
 body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
   #biblioteca_container
   ul {
-  --grade: 3;
   gap: 10px;
 }
 
 #biblioteca_container li {
+  justify-items: center;
   text-align: center;
+  width: calc(90% / 2);
   background: rgba(18, 30, 51, 1);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -425,6 +425,7 @@ body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
 body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
   #biblioteca_container
   li {
+  width: calc(90% / 3);
   padding: 1%;
 }
 
@@ -452,7 +453,7 @@ body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
 }
 
 ul li.divisao {
-  grid-column: 1 / -1;
+  width: 100% !important;
   border-radius: 10px;
   margin-bottom: 5%;
 }
