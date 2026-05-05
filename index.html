@@ -73,7 +73,11 @@
             </div>
         </div>
 
-        <button id="biblioteca_button"><svg><use href="#icon_mais" /></svg></button>
+        
+        <div id="biblioteca_button">
+            <input type="checkbox" name="biblioteca-btn" id="biblioteca-btn">
+            <svg for="biblioteca-btn"><use href="#icon_mais" /></svg>
+        </div>
     </section>
 
     <section id="biblioteca_container" class="">
@@ -83,14 +87,25 @@
             </ul>
         </nav>
         
-        <button id="btn_menu"><svg><use href="#icon_menu"></svg></button>
+        <div id="btn_menu">
+            <input type="checkbox" name="menu-btn" id="menu-btn">
+            <svg for="menu-btn"><use href="#icon_menu"></svg>
+        </div>
     </section>
 
     <section id="menu" class="">
         <label for="grade_biblioteca">Grade da Biblioteca</label>
+
         <div id="grade">
-            <button value="2x2" class="escolhido"><svg><use href="#icon_2x2"></svg></button>
-            <button value="3x3"><svg><use href="#icon_3x3"></svg></button>
+            <div>
+                <input type="radio" name="ordem-da-grade" checked value="2x2" id="">
+                <svg><use href="#icon_2x2"></svg>
+            </div>
+            
+            <div>
+                <input type="radio" name="ordem-da-grade" value="3x3" id="grade3x3">
+                <svg><use href="#icon_3x3"></svg>
+            </div>
         </div>
 
         <div id="historico"></div>

@@ -76,11 +76,17 @@ body {
 
 img {
   border-radius: 15px;
-  width: 100%;
-  aspect-ratio: 1;
+  inset: 0;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
   object-fit: cover;
   object-position: center;
+}
+
+div > input[type="checkbox"],
+div > input[type="radio"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
 }
 
 /* HOME --------------------------------------------------------*/
@@ -88,12 +94,12 @@ img {
 /* HOME --------------------------------------------------------*/
 
 #home {
+  position: relative;
   width: 100%;
   height: 100%;
   background: var(--background);
   justify-items: center;
   padding: 3% 0;
-  position: relative;
 }
 
 /* SETAS */
@@ -166,6 +172,7 @@ use {
   width: var(--tamanho_diaria);
   /* width: calc((var(--tamanho_diaria) + 1.3%)); */
   align-content: center;
+  scroll-snap-type: x mandatory;
   border-radius: 20px;
   /* border: 1px solid white; */
 }
@@ -180,6 +187,7 @@ use {
 }
 
 .diaria {
+  scroll-snap-align: center;
   background: var(--card);
   border: var(--borda_card);
   color: var(--texto_1);
@@ -216,7 +224,7 @@ use {
 }
 
 .derrotado p::after {
-  content: '\A derrotado';
+  content: "\A derrotado";
   white-space: pre-line;
   color: rgba(0, 226, 0, 0.5);
   text-transform: uppercase;
@@ -322,23 +330,25 @@ use {
 /* BIBLIOTECA --------------------------------------------------------*/
 
 #biblioteca_button {
+  position: absolute;
   transition: 0.6s;
   transform: rotate(0deg);
   z-index: 1;
-  position: absolute;
   right: 5%;
   bottom: 3%;
   color: var(--texto_1);
-  border: 0;
   background: rgba(21, 26, 38, 1);
-  box-shadow: 0 0 5px rgba(128, 128, 128, 0.4);
+  border: 1px solid rgba(128, 128, 128, 0.2);
   color: var(--texto_1);
   width: 60px;
   aspect-ratio: 1;
   border-radius: 50%;
+  align-content: center;
+  text-align: center;
 }
 
-#biblioteca_button.aberto {
+#biblioteca_button:has(#biblioteca-btn:checked),
+body:has(#menu-btn:checked) #btn_menu {
   transform: rotate(45deg);
   background-color: #ff4b4b;
   opacity: 0.85;
@@ -346,26 +356,27 @@ use {
 
 #biblioteca_container {
   position: absolute;
+  width: 90%;
+  height: 100%;
   top: 5%;
   left: 50%;
   transform: translate(-50%, 100%);
-  transition: 0.6s ease-out;
-  width: 90%;
-  height: 100%;
+  padding: 2%;
+  border-radius: 20px;
   background: rgb(10, 16, 32);
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
-  padding: 2%;
   opacity: 0;
-  border-radius: 20px;
+  transition: 0.6s ease-out;
 }
 
-#biblioteca_container.trio {
-  padding: 2% 0;
-}
-
-#biblioteca_container.aberto {
+body:has(#biblioteca-btn:checked) #biblioteca_container {
   transform: translate(-50%, 0);
   opacity: 1;
+}
+
+body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
+  #biblioteca_container {
+  padding: 2% 0;
 }
 
 #biblioteca_container > h2 {
@@ -386,21 +397,23 @@ nav::-webkit-scrollbar {
 }
 
 #biblioteca_container ul {
-  display: flex;
-  flex-wrap: wrap;
+  --grade: 2;
+  display: grid;
+  grid-template-columns: repeat(var(--grade), 1fr);
+  place-content: center;
   gap: 25px;
-  justify-content: center;
+  padding: 0 3%;
 }
 
-#biblioteca_container.trio ul {
+body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
+  #biblioteca_container
+  ul {
+  --grade: 3;
   gap: 10px;
 }
 
 #biblioteca_container li {
-  /* border: 2px solid red; */
-  justify-items: center;
   text-align: center;
-  width: calc(90% / 2);
   background: rgba(18, 30, 51, 1);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -409,14 +422,10 @@ nav::-webkit-scrollbar {
   transition: 0.3s;
 }
 
-#biblioteca_container.trio li {
-  width: calc(90% / 3);
+body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
+  #biblioteca_container
+  li {
   padding: 1%;
-}
-
-#biblioteca_container li.clicado {
-  scale: 1.1;
-  border-color: var(--cor_tema);
 }
 
 #biblioteca_container img {
@@ -431,7 +440,9 @@ nav::-webkit-scrollbar {
   font-weight: bold;
 }
 
-#biblioteca_container.trio p {
+body:has(input[name="ordem-da-grade"][value="3x3"]:checked)
+  #biblioteca_container
+  p {
   font-size: 1.3rem;
 }
 
@@ -440,8 +451,8 @@ nav::-webkit-scrollbar {
   font-size: 1.2rem !important;
 }
 
-#biblioteca_container li.divisao {
-  width: 100%;
+ul li.divisao {
+  grid-column: 1 / -1;
   border-radius: 10px;
   margin-bottom: 5%;
 }
@@ -468,15 +479,8 @@ nav::-webkit-scrollbar {
   color: var(--texto_2);
   padding: 2%;
   transition: 0.2s;
-}
-
-button.clicado {
-  transform: scale(1.15);
-}
-
-#btn_menu.aberto {
-  background: #ff4b4b !important;
-  color: white !important;
+  align-content: center;
+  text-align: center;
 }
 
 #menu {
@@ -494,7 +498,7 @@ button.clicado {
   transition: 0.5s;
 }
 
-#menu.aberto {
+body:has(#menu-btn:checked) #menu {
   transform: translateX(0);
 }
 
@@ -502,7 +506,7 @@ button.clicado {
   font-size: 1.6rem;
 }
 
-#menu > div {
+#grade {
   display: flex;
   justify-content: center;
   gap: 5px;
@@ -511,7 +515,8 @@ button.clicado {
   margin: 15px 0 30px;
 }
 
-#menu button {
+#grade > div {
+  position: relative;
   color: inherit;
   width: calc(90% / 2);
   height: auto;
@@ -519,9 +524,10 @@ button.clicado {
   border: 2px solid var(--cor_tema);
   background: transparent;
   padding: 5%;
+  overflow: hidden;
 }
 
-#menu button.escolhido {
+#grade div:has(input[type="radio"]:checked) {
   background: var(--cor_tema);
 }
 
@@ -632,9 +638,7 @@ button.clicado {
 #avaliacao_container {
   display: none;
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.3);
   align-content: center;
   z-index: 5;
@@ -701,10 +705,7 @@ button.clicado {
 
 #container_principal > div input {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   opacity: 0;
 }
 
@@ -752,10 +753,6 @@ button.clicado {
 /* RESPONSIVO */
 
 @media (width < 37.5rem) {
-  /* body {
-    border: 2px solid red;
-  } */
-
   * {
     box-shadow: none;
   }

@@ -1,31 +1,28 @@
+// #region BASICO
+
 const date = new Date();
 const dia_da_semana = (date.getDay()) + 1;
 const hoje_dia = date.getDate();
 const hoje_mes = (date.getMonth()) + 1;
 const transcricao = ["Domingo", "Segunda-Feira", "Terça-Feira", "Quarta-Feira", "Quinta-Feira", "Sexta-Feira", "Sábado"];
 
-const biblioteca_button = document.getElementById('biblioteca_button'),
-    biblioteca_painel = document.getElementById('biblioteca_container'),
-    menu_painel = document.getElementById('menu'),
-    tela_adicao = document.getElementById('tela_adicao'),
-    setas_container = document.getElementById('setas_container'),
-    trilho = document.getElementById('trilho'),
-    alerta_delete = document.getElementById('alerta_delete'),
-    avaliacao_container = document.getElementById('avaliacao_container');
+const biblioteca_painel = document.getElementById('biblioteca_container');
+const gradeContainer = document.getElementById('grade');
+const tela_adicao = document.getElementById('tela_adicao');
+const setas_container = document.getElementById('setas_container');
+const trilho = document.getElementById('trilho');
+const alerta_delete = document.getElementById('alerta_delete');
 
 let login = localStorage.getItem('ultimoLogin');
 let exercicios = JSON.parse(localStorage.getItem('exercicios_database') || '[]');
 
-/* =======================
-   CARREGAR EXERCÍCIOS
-======================= */
-
 if (exercicios != '[]') renderizar(exercicios);
 
+// #endregion
 
-/* =======================
-   OBSERVER
-======================= */
+
+
+// #region OBSERVER
 
 const observer = new IntersectionObserver(
     (entries) => {
@@ -53,32 +50,21 @@ const observer = new IntersectionObserver(
     }, { threshold: 0.3 }
 );
 
+// #endregion
 
-/* =======================
-   EVENTOS
-======================= */
 
-// Abre/Fecha biblioteca
-biblioteca_button.addEventListener('click', () => {
-    biblioteca_button.classList.toggle('aberto');
-    biblioteca_painel.classList.toggle('aberto');
-});
+
+// #region EVENTS
 
 // Manda as informações para a tela de adição ao escolher um exercicio
 biblioteca_painel.addEventListener('click', (click) => {
     const target = click.target.closest('li');
-    const menu_open = click.target.closest('#btn_menu');
 
-    if (!target && !menu_open) return;
+    if (!target) return;
 
     if (target) {
-        target.classList.add('clicado');
         const contagem = target.dataset.contagem;
         const texto = (contagem == 'undefined' ? 'Peso (Kg)' : contagem);
-
-        setTimeout(() => {
-            target.classList.remove('clicado');
-        }, 200);
 
         tela_adicao.classList.add('aberto');
 
@@ -92,45 +78,27 @@ biblioteca_painel.addEventListener('click', (click) => {
         tela_adicao.querySelector('label').setAttribute('data-contagem', texto);
     }
 
-    else if (menu_open) {
-        menu_painel.classList.toggle('aberto');
-        menu_open.classList.toggle('aberto');
-        menu_open.classList.add('clicado');
-        setTimeout(() => { menu_open.classList.remove('clicado') }, 200);
-    };
-
 });
 
-menu_painel.addEventListener('click', (click) => {
-    const target = click.target.closest('button');
+gradeContainer.addEventListener('click', (click) => {
+    const target = click.target.closest('input');
 
     if (!target) return;
 
-    gridBiblioteca((target.value == '3x3'));
+    const grade3x3 = (target.id === 'grade3x3' ? true : false)
+
+    localStorage.setItem('grid_save', grade3x3);
 });
 
-function gridBiblioteca(grid) {
+document.addEventListener("DOMContentLoaded", () => {
+    const gradeSave = JSON.parse(localStorage.getItem('grid_save'));
 
-    if (grid == undefined) return
-
-    const escolhido = menu_painel.querySelector('.escolhido');
-    if (escolhido) escolhido.classList.remove('escolhido');
-
-    if (grid) {
-        biblioteca_painel.classList.add('trio');
-        menu_painel.querySelector('button[value="3x3"]').classList.add('escolhido');
+    if (gradeSave) {
+        const radio = document.getElementById('grade3x3');
+        radio.checked = true;
     }
-    else {
-        biblioteca_painel.classList.remove('trio');
-        menu_painel.querySelector('button[value="2x2"]').classList.add('escolhido');
-    };
+});
 
-    localStorage.setItem('grid_save', grid);
-
-    // console.log("grid: "+grid);
-};
-
-gridBiblioteca(JSON.parse(localStorage.getItem('grid_save')));
 
 // Todas as ações da tela de adição
 tela_adicao.addEventListener('click', (click) => {
@@ -167,10 +135,11 @@ tela_adicao.addEventListener('click', (click) => {
     setTimeout(() => target.classList.remove('click'), 100);
 });
 
+// #endregion
 
-/* =======================
-   ADICIONAR ITEM
-======================= */
+
+
+// #region ADICIONAR ITENS
 
 // O que acontece após apertar em "adicionar item"
 function adicionarItem(imgSRC, contagem) {
@@ -229,9 +198,11 @@ function adicionarItem(imgSRC, contagem) {
     };
 }
 
-/* =======================
-   RENDERIZAR CARD
-======================= */
+// #endregion
+
+
+
+// #region CARDS
 
 function renderizar(itens) {
     if (itens.length === 0) return
@@ -376,8 +347,6 @@ function atualizandoDataShow(numero, nome) {
     data_show.querySelector('h3').textContent = nome;
 }
 
-// function historico(){}
-
 // Botão de Apagar 
 trilho.addEventListener('click', (click) => {
     const target = click.target.closest('.apagar_btn');
@@ -390,13 +359,6 @@ trilho.addEventListener('click', (click) => {
     const peso = div.querySelector('h4').textContent;
     const dificuldade = div.querySelector('p').textContent;
     const index = target.dataset.index;
-
-
-    target.classList.add('clicado');
-
-    setTimeout(() => {
-        target.classList.remove('clicado');
-    }, 200);
 
     alerta_delete.classList.add('aberto');
 
@@ -425,9 +387,11 @@ alerta_delete.addEventListener('click', (click) => {
     }
 })
 
-/* =======================
-   CARROSSEL
-======================= */
+// #endregion
+
+
+
+// #region CARROSSEL
 
 let diarias = document.querySelectorAll('.diaria');
 let casa_carrossel = { valor: 0 };
@@ -498,6 +462,12 @@ setas_container.addEventListener('click', (click) => {
     setTimeout(() => target.classList.remove('click'), 100);
 });
 
+// #endregion
+
+
+
+// #region BIBLIOTECA
+
 function carregandoBiblioteca(txt) {
 
     const biblioteca_exercs = txt;
@@ -548,6 +518,10 @@ function carregandoBiblioteca(txt) {
 };
 
 fetch('biblioteca.txt').then(res => res.json()).then(data => { carregandoBiblioteca(data) })
+
+// #endregion
+
+
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js")
