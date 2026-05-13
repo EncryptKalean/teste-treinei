@@ -180,6 +180,7 @@ header #data-show h3 {
   font-size: 1.3rem;
   gap: 15%;
   text-transform: capitalize;
+  text-align: left;
 }
 
 .area-textos > div {
