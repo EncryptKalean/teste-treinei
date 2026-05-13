@@ -1,0 +1,524 @@
+:root {
+  --cor-texto-um: #e6e9f0;
+  --cor-texto-dois: #aab0c0;
+  --cor-tema: #8a5cf698;
+  --card-cores: #141822;
+  --card-cores-dois: rgb(10, 16, 32);
+  --gradient: #0b0e13, #0f131a;
+  --fake-shadow: 3px solid rgba(0, 0, 0, 0.2);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+*:focus-visible {
+  outline: 3px solid #4a90e2;
+  outline-offset: 5px;
+}
+
+li,
+ul {
+  list-style: none;
+}
+
+html {
+  scroll-behavior: auto;
+  font-size: 62.5%;
+  color: var(--cor-texto-um);
+  font-family: "Inter", sans-serif;
+  height: 100%;
+  overflow: clip;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1px;
+}
+
+body {
+  height: 100%;
+  background: linear-gradient(120deg, var(--gradient));
+  display: grid;
+  place-items: start center;
+  position: relative;
+  overflow: clip;
+  padding: 4%;
+}
+
+.center {
+  display: flex;
+  width: min(100%, 1200px);
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+use {
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+svg {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+img {
+  border-radius: 10px;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* HEADER ---------------------- */
+/* HEADER ---------------------- */
+/* HEADER ---------------------- */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  width: min(1000px, 80%);
+  background-color: var(--card-cores);
+  border-radius: 15px;
+  padding: 4%;
+  border: var(--fake-shadow);
+}
+
+header button {
+  width: 40px;
+  aspect-ratio: 1;
+  color: inherit;
+  background-color: transparent;
+  transform: rotate(90deg);
+}
+
+button#seta-esquerda {
+  transform: rotate(-90deg);
+}
+
+header #data-show h3 {
+  color: var(--cor-texto-dois);
+  font-weight: 500;
+}
+
+/* VITRINE ---------------------- */
+/* VITRINE ---------------------- */
+/* VITRINE ---------------------- */
+
+#vitrine {
+  display: flex;
+  border-radius: 15px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  max-height: 80dvh;
+}
+
+.diaria {
+  scroll-snap-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: inherit;
+  flex-shrink: 0;
+  overflow: auto;
+  scrollbar-width: none;
+  contain: content;
+}
+
+.exercicio {
+  position: relative;
+  display: flex;
+  padding: min(7%, 20px) min(3%, 20px);
+  gap: 3%;
+  background-color: var(--card-cores);
+  border: var(--fake-shadow);
+  border-top: none;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--cor-texto-dois), transparent 80%);
+  contain: content;
+  content-visibility: auto;
+  contain-intrinsic-size: 120px;
+}
+
+.exercicio:first-of-type {
+  border-top: var(--fake-shadow);
+}
+.exercicio:last-of-type {
+  border-bottom: var(--fake-shadow);
+}
+
+.derrotado {
+  opacity: 0.8;
+}
+
+.exercicio img {
+  width: min(25%, 200px);
+  border: none;
+  opacity: 0.7;
+}
+
+.exercicio .area-textos {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  font-size: 1.3rem;
+  gap: 15%;
+  text-transform: capitalize;
+}
+
+.area-textos > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.area-textos .trofeu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #ffe600;
+  background-color: var(--cor-tema);
+  width: min(30px, 10%);
+  aspect-ratio: 1;
+  padding: 5px;
+  display: none;
+}
+
+.derrotado .trofeu {
+  display: block;
+}
+
+.area-textos .peso {
+  background-color: rgba(0, 0, 0, 0.3);
+  aspect-ratio: 1;
+  align-content: center;
+  padding: 2%;
+  color: var(--cor-tema);
+  font-size: 1.7rem;
+}
+
+.area-textos .area-textos-baixo {
+  color: var(--cor-texto-dois);
+}
+
+.derrotado .area-textos-baixo p::after {
+  content: "derrotado";
+  color: rgba(0, 226, 0, 0.5);
+  text-transform: uppercase;
+}
+
+.area-textos-baixo .delete-tarefa-btn {
+  color: var(--cor-tema);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  width: max(25px, 7%);
+  aspect-ratio: 1;
+  padding: 0.5%;
+}
+
+@supports (animation-timeline: view()) {
+  .diaria {
+    animation-name: fadeInScale;
+    animation-fill-mode: forwards;
+    animation-timeline: view(inline);
+    animation-range: entry 0 cover 50%;
+
+    opacity: 0;
+    isolation: isolate;
+  }
+
+  @keyframes fadeInScale {
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* BIBLIOTECA-BTN ---------------------- */
+/* BIBLIOTECA-BTN ---------------------- */
+/* BIBLIOTECA-BTN ---------------------- */
+
+#biblioteca-btn,
+#menu-btn {
+  position: absolute;
+  right: 5%;
+  bottom: 3%;
+  width: 60px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  color: var(--cor-texto-um);
+  background: rgba(21, 26, 38, 1);
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  padding: 5px;
+  transition:
+    transform 0.6s,
+    background 0.6s,
+    opacity 0.6s;
+  z-index: 1;
+}
+
+#biblioteca-btn > input,
+#menu-btn > input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+#biblioteca-btn:has(input:checked),
+#menu-btn:has(input:checked) {
+  transform: rotate(45deg);
+  background-color: #ff4b4b;
+  opacity: 0.85;
+}
+
+/* BIBLIOTECA ---------------------- */
+/* BIBLIOTECA ---------------------- */
+/* BIBLIOTECA ---------------------- */
+
+#biblioteca {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background-color: var(--card-cores-dois);
+  height: 95%;
+  bottom: 0;
+  font-size: 1.5rem;
+  padding: 1%;
+  transform: translateY(100%);
+  opacity: 0;
+  transition:
+    opacity 0.7s,
+    transform 0.7s;
+  border: var(--fake-shadow);
+  contain: content;
+}
+
+body:has(#btn:checked) #biblioteca {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#biblioteca-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  scrollbar-width: none;
+  overflow-y: auto;
+  height: 100%;
+  /* width: 100%; */
+}
+
+#biblioteca-container li {
+  justify-items: center;
+  text-align: center;
+  width: calc(90% / 3);
+  background: #121e33;
+  border: var(--fake-shadow);
+  border-radius: 10px;
+  padding: 0 1%;
+  letter-spacing: 1px;
+  content-visibility: auto;
+  contain-intrinsic-size: 120px;
+}
+
+#biblioteca-container img {
+  opacity: 0.8;
+  max-width: 120px;
+}
+
+#biblioteca-container p {
+  font-size: 1.3rem;
+  line-height: 25px;
+  margin-top: 5px;
+  font-weight: bold;
+}
+
+.musculo {
+  color: var(--cor-texto-dois);
+  font-size: 1.2rem !important;
+}
+
+#biblioteca-container li.divisao {
+  width: 100% !important;
+  margin-bottom: 5%;
+}
+
+#biblioteca-container li.divisao:not(.divisao:first-of-type) {
+  margin-top: 10%;
+}
+
+/* MENU ---------------------------------------------------------------------- */
+/* MENU ---------------------------------------------------------------------- */
+/* MENU ---------------------------------------------------------------------- */
+
+#menu-btn {
+  right: unset;
+  left: 5%;
+}
+
+/* TELA ADIÇÂO ---------------------------------------------------------------- */
+/* TELA ADIÇÂO ---------------------------------------------------------------- */
+/* TELA ADIÇÂO ---------------------------------------------------------------- */
+
+#tela-adicao {
+  position: absolute;
+  bottom: 0;
+  background-color: var(--card-cores-dois);
+  height: 93%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  padding: 2%;
+  padding-bottom: 5dvh;
+  transform: translateY(100%);
+  opacity: 0;
+  transition:
+    transform 0.7s,
+    opacity 0.7s;
+  border: var(--fake-shadow);
+}
+
+#tela-adicao.aberto {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+#tela-adicao > label {
+  width: 100%;
+  text-align: left;
+  font-size: 1.5rem;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+
+#tela-adicao img {
+  width: max(200px, 20%);
+  border: 2px solid var(--cor-tema);
+}
+
+#tela-adicao > div {
+  border: 1px solid var(--cor-tema);
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(90deg, var(--gradient));
+}
+
+#tela-adicao button {
+  height: 100%;
+  aspect-ratio: 1;
+  background: var(--card-cores);
+  border: 0;
+  color: inherit;
+  padding: 0 3.5%;
+}
+
+#tela-adicao input {
+  width: 100%;
+  background-color: transparent;
+  color: inherit;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.botoes-container {
+  display: flex;
+  background: transparent !important;
+  border: none !important;
+  justify-content: space-around !important;
+}
+
+.botoes-container button {
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--cor-tema);
+  color: var(--cor-texto-um);
+  width: 40%;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.botoes-container button:nth-of-type(2) {
+  background-color: var(--cor-tema) !important;
+}
+
+/* TELA DELETE ------------------------------------------------------------ */
+/* TELA DELETE ------------------------------------------------------------ */
+/* TELA DELETE ------------------------------------------------------------ */
+
+#tela-delete {
+  display: grid;
+  place-items: center;
+  gap: 25px;
+  padding: 4% 2%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(100%);
+  opacity: 0;
+  background-color: var(--card-cores);
+  border: 2px solid var(--cor-tema);
+  transition:
+    opacity 0.5s,
+    transform 0.5s;
+}
+
+#tela-delete.aberto {
+  transform: translateY(-50%) translateX(0);
+  opacity: 1;
+}
+
+#tela-delete h2 {
+  font-size: 1.7rem;
+}
+
+#tela-delete .botoes-container {
+  width: 100%;
+}
+
+#tela-delete .botoes-container button {
+  height: 100%;
+  padding: 3.5%;
+  border: 2px solid var(--cor-tema);
+  letter-spacing: 0;
+}
+
+#showcase {
+  width: 100%;
+}
+
+#showcase li {
+  border: 1px solid color-mix(in srgb, var(--cor-texto-dois), transparent 80%);
+  border-left: 0;
+  border-right: 0;
+}
+
+#showcase .derrotado .area-textos-baixo {
+  display: none;
+}
+
+#showcase svg {
+  display: none;
+}

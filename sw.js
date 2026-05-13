@@ -3,8 +3,8 @@ const CACHE_NAME = "treinei-v4.3.L.2";
 const STATIC_ASSETS = [
   "./",
   "./index.html",
-  "./src/css_js/css.css",
-  "./src/css_js/script.js",
+  "./src/css/css.css",
+  "./src/js/script.js",
   "./manifest.json",
   "./biblioteca.txt",
 ];
