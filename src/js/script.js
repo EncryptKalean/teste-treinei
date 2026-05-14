@@ -2,31 +2,35 @@
 const observer = new IntersectionObserver(
     (entries) => {
         entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+
             const item = entry.target;
 
-            if (item.tagName === 'IMG' && entry.isIntersecting) {
+            if (item.tagName !== 'IMG') return;
 
+            observer.unobserve(item);
+
+            if (!item.dataset.errorBound) {
+                item.dataset.errorBound = '1';
 
                 item.onerror = () => {
-                    if (!item.dataset.failed) {
-                        item.dataset.failed = 1;
-                        item.src = item.dataset.original;
+                    if (item.dataset.failed) return;
 
-                        console.log('OBS: deu erro na imagem otimizada');
-                    };
+                    item.dataset.failed = '1';
+                    item.src = item.dataset.original;
+
+                    console.log('OBS: deu erro na imagem otimizada');
                 };
-
-                item.src = item.dataset.otimizado;
-
-                observer.unobserve(item);
-
-                console.log('renderizou');
-                // console.log(item);
-
             }
-            // else item.classList.toggle('show', entry.isIntersecting);
+
+            item.src = item.dataset.otimizado;
+
+            console.log('renderizou');
         });
-    }, { threshold: 0.3 }
+    }, {
+    threshold: 0.3,
+    rootMargin: '200px'
+}
 );
 
 const date = new Date();
@@ -57,7 +61,7 @@ const database = databaseBruto.map(item => {
         valor: item.peso || '',
         id: item.diariaID || '',
 
-        data: `${String(item.dds)}-${String(item.dia)}-${String(item.mes)}`
+        data: `${String(item.dds - 1)}-${String(item.dia)}-${String(item.mes)}`
     };
 });
 
@@ -315,6 +319,8 @@ function createElement(tag, options = {}) {
 }
 
 function renderizar(database) {
+    let novo;
+
     if (!Array.isArray(database)) database = [database];
 
     const fragment = document.createDocumentFragment();
@@ -338,6 +344,8 @@ function renderizar(database) {
             casasCarrossel.carrosselUm.maximo++
 
             fragment.prepend(ul);
+
+            novo = true;
 
             return ul;
         }
@@ -444,9 +452,13 @@ function renderizar(database) {
         diaria.append(li);
     };
 
-    vitrine.append(fragment);
+    vitrine.prepend(fragment);
 
     dataShow(casasCarrossel.carrosselUm);
+
+    if (novo) setTimeout(() => {
+        vitrine.scrollLeft = 0;
+    }, 500);
 }
 
 // #endregion
