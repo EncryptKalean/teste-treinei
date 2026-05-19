@@ -193,6 +193,7 @@ const telaAdicaoNome = telaAdicao.querySelector('h2');
 const labelPeso = telaAdicao.querySelector('#label-peso');
 const inputPeso = telaAdicao.querySelector('#input-peso');
 const inputDificuldade = telaAdicao.querySelector('#input-dificuldade');
+const cadaLadoBTN = document.getElementById('cada-lado-btn');
 
 function novoTreino() {
     return {
@@ -202,7 +203,8 @@ function novoTreino() {
         dificuldade: '',
         valor: '',
         id: '',
-        data: `${diaDaSemana}-${dia}-${mes}`
+        data: `${diaDaSemana}-${dia}-${mes}`,
+        cadaLado: false
     };
 };
 
@@ -279,6 +281,7 @@ function criarTreino() {
     treino.dificuldade = inputDificuldade.value;
     treino.valor = inputPeso.value;
     treino.id = crypto.randomUUID();
+    treino.cadaLado = cadaLadoBTN.checked;
 
     database.push(treino);
 
@@ -286,9 +289,13 @@ function criarTreino() {
 
     renderizar(treino);
 
+    console.log(treino);
+
     treino = novoTreino();
 
     abrirTelaAdicao();
+
+    cadaLadoBTN.checked = false;
 }
 
 //#endregion 
@@ -415,6 +422,12 @@ function renderizar(database) {
         svg.append(use);
 
         areaTextosCima.append(svg);
+
+        if (el.cadaLado) {
+            const unilateral = createElement('span', { className: 'unilateral', text: 'Cada Lado' });
+
+            peso.append(unilateral);
+        };
 
         areaTextosCima.append(peso);
 

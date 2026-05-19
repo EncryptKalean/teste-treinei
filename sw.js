@@ -1,4 +1,4 @@
-const CACHE_NAME = "treinei-v4.3.L.2";
+const CACHE_NAME = "treinei-v4.4.L.2";
 
 const STATIC_ASSETS = [
   "./",

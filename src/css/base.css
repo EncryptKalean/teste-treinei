@@ -206,12 +206,21 @@ header #data-show h3 {
 }
 
 .area-textos .peso {
+  position: relative;
   background-color: rgba(0, 0, 0, 0.3);
   aspect-ratio: 1;
   align-content: center;
   padding: 2%;
   color: var(--cor-tema);
   font-size: 1.7rem;
+}
+
+.unilateral {
+  position: absolute;
+  top: -45%;
+  right: 0;
+  font-size: 1rem;
+  min-width: max-content;
 }
 
 .area-textos .area-textos-baixo {
@@ -464,6 +473,33 @@ body:has(#btn:checked) #biblioteca {
 
 .botoes-container button:nth-of-type(2) {
   background-color: var(--cor-tema) !important;
+}
+
+#tela-adicao #cada-lado-container {
+  position: relative;
+  text-align: center;
+  border: 1px solid var(--cor-tema);
+  color: var(--cor-texto-um);
+  border-radius: 10px;
+  width: 40%;
+  padding: 3%;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  opacity: 0.7;
+  transition:
+    background-color 0.3s,
+    opacity 0.3s;
+}
+
+#cada-lado-container:has(#cada-lado-btn:checked) {
+  background-color: var(--cor-tema);
+  opacity: 1;
+}
+
+#cada-lado-btn {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
 }
 
 /* TELA DELETE ------------------------------------------------------------ */
