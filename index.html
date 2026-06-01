@@ -17,6 +17,8 @@
       <link rel="stylesheet" href="src/css/base.css" />
     </noscript>
 
+    <!-- <link rel="stylesheet" href="base-legivel.css" /> -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -140,10 +142,17 @@
         </button>
       </div>
 
-      <label for="cada-lado-btn" id="cada-lado-container">
-        <span>Cada Lado</span>
-        <input type="checkbox" name="cada-lado-btn" id="cada-lado-btn" />
-      </label>
+      <div id="divisao-de-peso">
+        <label for="cada-lado-btn" id="cada-lado-container">
+          <span>Cada Lado</span>
+          <input type="radio" name="divisao" id="cada-lado-btn" />
+        </label>
+
+        <label for="ao-todo-btn" id="ao-todo-container">
+          <span>Ao Todo</span>
+          <input type="radio" name="divisao" id="ao-todo-btn" checked />
+        </label>
+      </div>
 
       <label for="input-dificuldade">Dificuldade (0 a 10)</label>
       <div id="dificuldade-container">
